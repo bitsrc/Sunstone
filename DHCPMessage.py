@@ -1,3 +1,4 @@
+import DHCPOption
 
 class DHCPMessage():
   def __init__(self, data):
@@ -16,17 +17,19 @@ class DHCPMessage():
     self.sname = data[44:108]
     self.file = data[108:236]
     self.cookie = data[236:240]
-    options = data[240:]
+    optiondata = data[240:]
+    
+    self.options = {}
+    
     end = False
     offset = 0
-    while not end:
-      code = options[offset]
-      if code == 255:
+    while not end:      
+      length = int(optiondata[offset+1])
+      
+      option = DHCPOption.DHCPOption(length, optiondata[offset:offset+2+length])
+      self.options[option.code] = option
+      if option.code == 255:
         end = True
-        
-      length = options[offset+1]
-      if length > 0:
-        optiondata = options[offset+2:offset+2+int(length)]
-        
-      print("Code: {:d} Length: {:d}".format(code, length), optiondata)
+
       offset += length+2
+
