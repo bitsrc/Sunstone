@@ -32,4 +32,7 @@ class DHCPMessage():
         end = True
 
       offset += length+2
+  def clientAddress(self):
+    bytes = list(map(lambda x: "{:02x}".format(x), self.chaddr[0:6]))
+    return ":".join(bytes)
 

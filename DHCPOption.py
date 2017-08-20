@@ -1,3 +1,5 @@
+import struct
+
 CODE_SUBNET = 1
 CODE_TIMEOFFSET = 2
 CODE_ROUTER = 3
@@ -23,11 +25,11 @@ class DHCPOption():
     return self.data
   def int(self):
     if len(self.data) == 1:
-      return int(self.data)
+      return struct.unpack('B', self.data)[0]
     elif len(self.data) == 2:
-      return struct.unpack('H', self.data)
+      return struct.unpack('H', self.data)[0]
     elif len(self.data) == 4:
-      return struct.unpack('L', self.data)
+      return struct.unpack('L', self.data)[0]
   def ip(self):
     if len(self.data) == 4:
       octets = list(map(lambda x: int(x), self.data))
