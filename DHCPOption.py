@@ -13,8 +13,11 @@ CODE_END = 255
 TYPE_DISCOVER = 1
 TYPE_OFFER = 2
 TYPE_REQUEST = 3
+TYPE_DECLINE = 4
 TYPE_ACK = 5
 TYPE_NAK = 6
+TYPE_RELEASE = 7
+TYPE_INFORM = 8
 
 class DHCPOption():
   def __init__(self, length, data):
